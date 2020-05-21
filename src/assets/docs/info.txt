@@ -1,0 +1,3 @@
+Operation-Location: https://speechx.cognitiveservices.azure.com/spid/v1.0/operations/b26c1ad8-5b38-449b-b07c-8a9d57669fb9
+
+Request URL: https://speechx.cognitiveservices.azure.com/spid/v1.0/identificationProfiles/195cc4ca-20bc-4b7c-bf0e-562855a2e159/enroll
