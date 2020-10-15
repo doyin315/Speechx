@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import {HttpClientModule} from '@angular/common/http';
+import { SpeechRecogService } from '../app/services/speech-recog-service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [AudioRecordingService],
+  providers: [AudioRecordingService, SpeechRecogService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

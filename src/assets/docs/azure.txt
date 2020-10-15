@@ -1,0 +1,29 @@
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+apim-request-id: f1fc2a8b-1869-485d-b942-b86b1e0bfd9e
+Date: Thu, 26 Mar 2020 12:04:40 GMT
+Content-Length: 66
+Content-Type: application/json
+
+{
+  "identificationProfileId": "ae45da64-d1fb-47e0-983f-ad7b2f0dab11"
+}
+
+https://speechx.cognitiveservices.azure.com/spid/v1.0
+
+ccfa90c16fe1486cb4a1a58ea7f49faf
+
+{ identificationProfileId: 'b488606b-022d-4c6d-9a26-e650e4dc404f' } }
+{
+  "identificationProfileId": "bb7a664c-d8a5-465c-9b34-881da380d386"
+}
+
+{ identificationProfileId: '195cc4ca-20bc-4b7c-bf0e-562855a2e159' } //selected id
+PS C:\Users\DOYIN\Documents\VS_CODE\Javascript\Speech> 
+
+
+shareabel link: https://drive.google.com/open?id=11mDy35kWRhEmalYcL94qeWZzPeVPi4df  
+
+
+id angular:
+{identificationProfileId: "1984cb67-a876-4f21-97d2-fbb2d539376f"}

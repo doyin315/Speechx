@@ -1,0 +1,81 @@
+import { Injectable,NgZone } from '@angular/core';
+import { Observable} from 'rxjs';
+import * as _ from 'lodash';
+export interface Iwindow extends Window {
+  webkitSpeechRecognition: any;
+  SpeechRecognition: any;
+}
+function _window(): any{
+  return window;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WindowRefService  {
+  speechRecognition: any;
+  recognition = new window.SpeechRecognition();
+  finalTranscript = ''
+
+  get nativeWindow():any{
+    return  _window;
+  }
+
+  
+ constructor() {
+  this.recognition.interimResults = false;
+  this.recognition.maxAlternatives = 10;
+  this.recognition.continuous = false;
+
+  this.recognition.onerror = (e) => {
+    console.log('Error');
+    console.log(e);
+  }
+
+  this.recognition.onresult = (event) => {
+    let interimTranscript = '';
+    for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+      let transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        this.finalTranscript += transcript;
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+
+    this.mapMessage(this.finalTranscript)
+
+    setTimeout(()=>{
+      this.finalTranscript = '';
+      interimTranscript = '';
+    },2500)
+  }
+
+
+  }
+
+  mapMessage(message){
+    console.log("MESSAGE ->",message)
+    if(message.includes("forward")){
+      // request("forward");
+    }
+    else if (message.includes("backward")){
+      // request("backward");
+    }
+    else if (message.includes("picture")){
+      // request("capture")
+    }
+    else{
+      // msg.innerHTML = `I'm afraid I didn't understand '${msg.innerHTML}'`;
+      return 
+    }
+  }
+
+  startRecog(){
+    this.recognition.start();
+  }
+
+  stopRecog(){
+    this.recognition.stop()
+  }
+}

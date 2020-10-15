@@ -1,0 +1,13 @@
+[{"phrase":"i am going to make him an offer he cannot refuse"},
+{"phrase":"houston we have had a problem"},
+{"phrase":"my voice is my passport verify me"},
+{"phrase":"apple juice tastes funny after toothpaste"},
+{"phrase":"you can get in without your password"},
+{"phrase":"you can activate security system now"},
+{"phrase":"my voice is stronger than passwords"},
+{"phrase":"my password is not your business"},
+{"phrase":"my name is unknown to you"},
+{"phrase":"be yourself everyone else is already taken"}]
+
+{"enrollmentStatus":"Enrolling","enrollmentsCount":1,"remainingEnrollments":2,"phrase":"my voice is stronger than passwords"}
+{"enrollmentStatus":"Enrolled","enrollmentsCount":3,"remainingEnrollments":0,"phrase":"my voice is stronger than passwords"}

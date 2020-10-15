@@ -23,28 +23,17 @@ constructor(public http: HttpClient){}
   private _recordingTime = new Subject<string>();
   private _recordingFailed = new Subject<string>();
 
-  verificationProfileId = "ee51a4c8-0042-4b93-af1a-4ac139a6ed85";
-  // tslint:disable-next-line: max-line-length
-  verificationEnrollEndpoint = `https://speechx.cognitiveservices.azure.com/spid/v1.0/verificationProfiles/${this.verificationProfileId}/enroll`
-  jsonContent = 'application/json';
-  formContent = 'multipart/form-data';
-  testIdentificationProfileId = 'b488606b-022d-4c6d-9a26-e650e4dc404f';
-  operationid = 'b26c1ad8-5b38-449b-b07c-8a9d57669fb9';
-  operationUrl = `https://speechx.cognitiveservices.azure.com/spid/v1.0/operations/${this.operationid}`;
+  operationid= 'b26c1ad8-5b38-449b-b07c-8a9d57669fb9';
+  operationUrl=`https://speechx.cognitiveservices.azure.com/spid/v1.0/operations/${this.operationid}`
   identificationProfileId = '195cc4ca-20bc-4b7c-bf0e-562855a2e159';
   params = {shortAudio: true};
-  apiUrl = `https://speechx.cognitiveservices.azure.com/spid/v1.0/identificationProfiles/${this.testIdentificationProfileId}/enroll`;
+  apiUrl = `https://speechx.cognitiveservices.azure.com/spid/v1.0/identificationProfiles/${this.identificationProfileId}/enroll`;
   audioUrl = 'assets/audio.wav';
   options = {headers: new HttpHeaders({'Content-Type': 'multipart/form-data',
                                       'Ocp-Apim-Subscription-Key': 'ccfa90c16fe1486cb4a1a58ea7f49faf'})};
 
-  verificationUrl = `https://speechx.cognitiveservices.azure.com/spid/v1.0/verify?verificationProfileId=${this.verificationProfileId}`;
-  verificationIdEndpoint = `https://speechx.cognitiveservices.azure.com/spid/v1.0/verificationProfiles`;
-  statusOptions = {headers: new HttpHeaders({'Content-Type': 'application/json',
+  statusOptions= {headers: new HttpHeaders({'Content-Type': 'application/json',
   'Ocp-Apim-Subscription-Key': 'ccfa90c16fe1486cb4a1a58ea7f49faf'})};
-  lang = { "locale":"en-us",}
-  phraseUrl = `https://speechx.cognitiveservices.azure.com/spid/v1.0/verificationPhrases?locale=en-US`;
-
   getRecordedBlob(): Observable<RecordedAudioOutput> {
     return this._recorded.asObservable();
   }
@@ -129,18 +118,22 @@ constructor(public http: HttpClient){}
       });
     }
   }
-  sendAudio(audio): Observable<any> {
+  // sendAudio():Observable<any> {
+  //   const formData: FormData = new FormData();
+  //   const item= new Array();
+  //   this.recorder.stop((blob) => {
+  //   const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.wav');
+  //   this.stopMedia();
 
-    return this.http.post<any>(this.apiUrl, audio, this.options);
-  }
+  //   formData.append('file', blob, 'audio.wav');
 
-  verifyAudio(audio): Observable<any>  {
-
-    return this.http.post<any>(this.verificationUrl, audio, this.options);
-  }
-  // sendaudio(audio):Observable<any> {
-  //   return this.http.post(this.apiUrl, audio, this.options);
+  //   console.log(formData, blob);
+  //   });
+  //   return this.http.post<any>(this.apiUrl, formData, this.options);
   // }
+  sendaudio(audio):Observable<any> {
+    return this.http.post(this.apiUrl, audio, this.options);
+  }
   private stopMedia() {
     if (this.recorder) {
       this.recorder = null;
@@ -153,26 +146,11 @@ constructor(public http: HttpClient){}
     }
   }
 
-  getPhraseList() {
-    return this.http.get<any>(this.phraseUrl, this.options);
+  getStatus():Observable<any>{
+    return this.http.get(this.operationUrl,this.statusOptions);
   }
-  getVerificationProfile() {
-    return this.http.post<any>(this.verificationIdEndpoint, this.lang, this.options);
-  }
-  VerificationEnrollment(audio) {
-    return this.http.post<any>(this.verificationEnrollEndpoint, audio, this.options);
-  }
-  getBlob(url): Observable<any> {
-    const blob = url.changingThisBreaksApplicationSecurity;
-    console.log(blob.slice(5));
-    return this.http.get(blob , {responseType: 'blob'});
-  }
-
-  getStatus(): Observable<any> {
-    return this.http.get(this.operationUrl, this.statusOptions);
-  }
-  getAudio(): Observable<any> {
-    return this.http.get(this.audioUrl, {responseType: 'blob'});
+  getAudio():Observable<any>{
+    return this.http.get(this.audioUrl,{responseType: 'blob'});
   }
 
 }
