@@ -3,6 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {AudioRecordingService} from '../../services/audio-recording.service';
 import { from } from 'rxjs';
 import {SpeechRecogService } from '../../services/speech-recog-service';
+import { ToastrService } from 'ngx-toastr';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -14,11 +16,13 @@ export class MainComponent implements OnDestroy {
   blobUrl;
   showSearchButton;
   speechData;
+  valid = false;
   
 
   constructor(private audioRecordingService: AudioRecordingService,
               private sanitizer: DomSanitizer,
-              public speechRecogService: SpeechRecogService ) {
+              public speechRecogService: SpeechRecogService,
+              private toastr:ToastrService ) {
     this.showSearchButton = false
     this.speechData = '';
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -33,12 +37,28 @@ export class MainComponent implements OnDestroy {
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data.blob));
       console.log(this.blobUrl);
     });
+
+    this.speechRecogService.source.subscribe(val=>{
+      console.log(val)
+      console.log(val.includes('start'));
+      if(val.includes('start')){
+          this.toastr.success('Engine has started!!!')
+      }
+      else if(val.includes('stop')){
+        this.toastr.error('Engine has stopped!!!')
+    }
+    
+  })
   }
 
   ngOnDestroy() {
     this.speechRecogService.DestroySpeechObject()
   }
 
+  ngOnInit(): void {
+   
+    
+  }
   startRecording() {
     if (!this.isRecording) {
       this.isRecording = true;
@@ -64,13 +84,18 @@ export class MainComponent implements OnDestroy {
       console.log('get blob', data);
       this.audioRecordingService.sendAudio(data).subscribe(
         res => {
-          console.log('Success', res);
+          // console.log(res.result, res);
     }, error => {
       console.log(error.message);
+      this.toastr.error("An Error Ocurred");
     });
     });
   }
 
+  doToast(){
+    console.log("toast")
+    this.toastr.success("Working")
+  }
   getVerifyId() {
     this.audioRecordingService.getVerificationProfile().subscribe(
       res => {
@@ -102,8 +127,18 @@ export class MainComponent implements OnDestroy {
       this.audioRecordingService.verifyAudio(data).subscribe(
         res => {
           console.log('Success', res);
+          if(res.result=="Accept"){
+            console.log('toastr success')
+            this.toastr.success("Authentication Successful");
+            this.valid = true
+          }
+          else{
+            this.toastr.error("Authentication Failed. Invalid User!");
+          }
+        
     }, error => {
       console.log(error.message);
+      this.toastr.error("An Error Ocurred");
     });
     });
   }
@@ -132,22 +167,22 @@ export class MainComponent implements OnDestroy {
         //listener
         (value) => {
             this.speechData = value;
-            console.log(value);
-            console.log(value.includes('start'))
+            // console.log(value);
+            // console.log(value.includes('start'))
         },
         //errror
         (err) => {
             console.log(err);
             if (err.error == "no-speech") {
                 console.log("--restatring service--");
-                this.activateSpeechSearchMovie();
+                // this.activateSpeechSearchMovie();
             }
         },
         //completion
         () => {
             this.showSearchButton = true;
             console.log("--complete--");
-            this.activateSpeechSearchMovie();
+            // this.activateSpeechSearchMovie();
         });
 }
 

@@ -130,7 +130,6 @@ constructor(public http: HttpClient){}
     }
   }
   sendAudio(audio): Observable<any> {
-
     return this.http.post<any>(this.apiUrl, audio, this.options);
   }
 

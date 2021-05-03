@@ -5,7 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import {HttpClientModule} from '@angular/common/http';
-import { SpeechRecogService } from '../app/services/speech-recog-service'
+import { SpeechRecogService } from '../app/services/speech-recog-service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +17,10 @@ import { SpeechRecogService } from '../app/services/speech-recog-service'
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
+    
   ],
   providers: [AudioRecordingService, SpeechRecogService ],
   bootstrap: [AppComponent]
