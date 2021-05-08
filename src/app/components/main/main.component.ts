@@ -129,7 +129,7 @@ export class MainComponent implements OnDestroy {
           console.log('Success', res);
           if(res.result=="Accept"){
             console.log('toastr success')
-            this.toastr.success("Authentication Successful");
+            this.toastr.success("Authentication Successful!!!");
             this.valid = true
           }
           else{
@@ -152,6 +152,7 @@ export class MainComponent implements OnDestroy {
   }
   clearRecordedData() {
     this.blobUrl = null;
+    this.valid = false;
   }
 
   SpeechTotext(){
