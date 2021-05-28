@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Iwindow } from '../models/window';
 import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 export interface IWindow extends Window {
   SpeechRecognition: any;
@@ -16,7 +17,8 @@ export interface IWindow extends Window {
 export class SpeechRecogService  {
   speechRecognition: any;
 
- constructor(private zone: NgZone) {
+ constructor(private zone: NgZone,
+  private toastr:ToastrService) {
   }
   private source$ = new BehaviorSubject('');
 
@@ -41,6 +43,7 @@ export class SpeechRecogService  {
               var transcript = result[0].transcript;
               if (result.isFinal) {
                   if (result[0].confidence < 0.3) {
+                    this.toastr.warning("Unrecognized result - Please try again");
                       console.log("Unrecognized result - Please try again");
                   }
                   else {
@@ -63,6 +66,7 @@ export class SpeechRecogService  {
     };
 
       this.speechRecognition.start();
+      this.toastr.info("Say something - We are listening !!!");
       console.log("Say something - We are listening !!!");
   });
 }

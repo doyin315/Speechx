@@ -163,5 +163,15 @@
             <div id="backward"*ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</div>
             
             <!-- <div *ngIf="valid" (click)="endRecord()" >End</div> -->
+
+            <span>Select Image</span>
+        <input #imageInput
+         type="file"
+         accept="image/*"
+         (change)="processFile(imageInput)">
+        </div>
+
+        <div>
+            <button (click)="faceVerify()">Verify Face</button>
         </div>
     </div>

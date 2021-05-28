@@ -5,6 +5,12 @@ import { from } from 'rxjs';
 import {SpeechRecogService } from '../../services/speech-recog-service';
 import { ToastrService } from 'ngx-toastr';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FaceRecogntionService } from 'src/app/services/face-recogntion.service';
+
+class ImageSnippet {
+  constructor(public src: string, public file: File) {}
+}
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -22,7 +28,8 @@ export class MainComponent implements OnDestroy {
   constructor(private audioRecordingService: AudioRecordingService,
               private sanitizer: DomSanitizer,
               public speechRecogService: SpeechRecogService,
-              private toastr:ToastrService ) {
+              private toastr:ToastrService,
+              public faceService:FaceRecogntionService ) {
     this.showSearchButton = false
     this.speechData = '';
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -41,12 +48,17 @@ export class MainComponent implements OnDestroy {
     this.speechRecogService.source.subscribe(val=>{
       console.log(val)
       console.log(val.includes('start'));
-      if(val.includes('start')){
+      if(val){
+        if(val.includes('start')){
           this.toastr.success('Engine has started!!!')
       }
       else if(val.includes('stop')){
         this.toastr.error('Engine has stopped!!!')
+    } else{
+      this.toastr.warning('We do not understand- Please Try again.')
     }
+    
+      }
     
   })
   }
@@ -191,6 +203,59 @@ endRecord(){
   this.speechRecogService.DestroySpeechObject();
 }
 
+processFile(img){
+ 
+  const file: File =img.files[0];
 
+
+  let data = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file))
+
+  let url = window.URL.createObjectURL(file)
+  this.faceService.getBlob(url)
+  .subscribe(res=>{
+
+  }, err=>{
+
+  })
+}
+getImage(){
+  this.faceService.getBlob("assets/pic1.jpg").subscribe(
+    res=>{
+      console.log('ress',res)
+    },
+    err=>{
+      console.log(err)
+    }
+  )
+}
+
+faceVerify(){
+
+  this.faceService.verifyFace().subscribe(
+    (res: any)=>{
+      console.log('ress',res)
+
+      let total=0
+
+      for (let i=0; i<res.length; i++){
+        total= total + res[i].confidence
+      }
+
+      console.log('total',total)
+
+      let ave = total/res.length
+      console.log('ave',ave)
+      if(total>=0.5){
+        this.toastr.success("Valid Face")
+      }
+      else{
+        this.toastr.error('Invalid face');
+      }
+    },
+    err=>{
+      console.log(err)
+    }
+  )
+}
 
 }
