@@ -1,0 +1,8 @@
+<div class="container">
+
+    <img class="img img-fluid" *ngIf="imgSrc" [src]="imgSrc"/>
+    <form [formGroup]="form" class="form" (ngSubmit)="faceVerify(form.value)">
+        <input [formControl]="url" type="text" class="form-control inputbtn" placeholder="Please Enter Image URL" />
+        <button type="submit" class="submitbtn" [disabled]="form.invalid">Submit</button>
+    </form>
+</div>

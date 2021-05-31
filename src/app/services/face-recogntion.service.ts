@@ -26,7 +26,8 @@ test={
 testId="b48e6385-187f-4fee-b4c6-6fc1a99a9973"
 
 
-faceIds=["18438b2c-b229-4f84-8a1e-2d0304571755","9da5b5e3-c748-4fe2-b6b4-4165e9a1f6be","7e0016f9-9c58-446d-94de-b3b60c9e11e0","a91bb69e-45ff-4800-ae33-14900632c212"]
+
+faceIds=["3497d496-eca8-4272-868f-bf4417af7f51","8bcc3b0b-8871-4ac7-971f-adfa4c490d47","a48d79ce-b312-450d-819b-a0c6a3c63104"]
 
 
 testEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/findsimilars`
@@ -38,9 +39,6 @@ testData={
 }
 
   getBlob(url): Observable<any> {
-    console.log(url)
-    const blob = url.changingThisBreaksApplicationSecurity;
-
     let data={  
       url:  url
     }
@@ -52,8 +50,16 @@ testData={
   }
 
 
-  verifyFace(){
-    return this.http.post(this.testEnd, this.testData, this.options)
+  verifyFace(id){
+
+    const testData={
+      faceId: id,
+      faceIds: [...this.faceIds],
+      maxNumOfCandidatesReturned: 10,
+      mode: "matchPerson"
+    }
+
+    return this.http.post(this.testEnd,testData, this.options)
   }
 
 

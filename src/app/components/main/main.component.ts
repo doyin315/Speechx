@@ -231,7 +231,7 @@ getImage(){
 
 faceVerify(){
 
-  this.faceService.verifyFace().subscribe(
+  this.faceService.verifyFace('').subscribe(
     (res: any)=>{
       console.log('ress',res)
 
