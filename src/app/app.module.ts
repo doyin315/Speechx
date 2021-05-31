@@ -5,16 +5,33 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import {HttpClientModule} from '@angular/common/http';
-import { SpeechRecogService } from '../app/services/speech-recog-service'
+import { SpeechRecogService } from '../app/services/speech-recog-service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FacialComponent } from './components/facial/facial.component';
+import { EmotionComponent } from './components/emotion/emotion.component';
+import { VoiceComponent } from './components/voice/voice.component';
+import { BaseComponent } from './components/base/base.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    FacialComponent,
+    EmotionComponent,
+    VoiceComponent,
+    BaseComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
+    
   ],
   providers: [AudioRecordingService, SpeechRecogService ],
   bootstrap: [AppComponent]
