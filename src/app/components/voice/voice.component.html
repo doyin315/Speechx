@@ -1,1 +1,23 @@
-<p>voice works!</p>
+
+  <div class="container">
+    <div class="title">ENGINE CONTROLLER</div>
+    <!-- <div id="test">Stopped</div> -->
+    <!-- <button (click)="doToast()">Toastr</button> -->
+    <!-- <audio *ngIf="!isRecording && blobUrl"  controls>
+      <source [src]="blobUrl" type="audio/wav">
+    </audio> -->
+    <button *ngIf="isRecording && !blobUrl">{{recordedTime}}</button>
+    <div class="btn-container">
+        <div id="forward" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</div>
+        <div id="stop" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</div>
+        <!-- <div id="forward" *ngIf="!isRecording && blobUrl" (click)="send()">Send Recording</div> -->
+        <div id="forward" *ngIf="!isRecording && blobUrl && !valid" (click)="verify()">Verify</div>
+        <!-- <div *ngIf="valid" (click)="activateSpeechSearchMovie()">Give voice command</div> -->
+    </div>
+   
+
+    <h2 id="message">Waiting for your voice</h2>
+    <div class="btn-container back d-none">
+        <div id="backward"*ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</div>
+        
+</div>

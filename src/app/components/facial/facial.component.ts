@@ -124,4 +124,32 @@ faceVerify(value){
   get url(): FormControl{
     return this.form.get('url') as FormControl;
   }
+
+  startPi(){
+    this.faceService.start().subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>{
+
+      },
+      ()=>{
+
+      }
+    )
+  }
+
+  stopPi(){
+    this.faceService.stop().subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>{
+
+      },
+      ()=>{
+
+      }
+    )
+  }
 }
