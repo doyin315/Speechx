@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { stat } from 'fs';
 import { ToastrService } from 'ngx-toastr';
 import { FaceRecogntionService } from 'src/app/services/face-recogntion.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-facial-recog',
@@ -13,16 +15,23 @@ export class FacialComponent implements OnInit {
   imgSrc;
   form: FormGroup;
   store={}
+  emotion = false;
 
   constructor(
     public fb: FormBuilder,
     private faceService: FaceRecogntionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public router: Router
   ) { }
 
   ngOnInit() {
     this.initForm();
     this.initImg();
+    this.faceService.emotionState.subscribe(
+      (state) =>{
+        this.emotion = state;
+      })
+    
   }
 
   initImg(){
@@ -47,14 +56,16 @@ faceVerify(value){
   const {url} = value;
 
   if (this.store[url]){
-    this.verify(this.store[url])
+    this.verify(this.store[url].id, url)
     return
   }
 
   this.faceService.getBlob(url).subscribe(
     res=>{
-      this.store[url] =res[0].faceId
-      this.verify(this.store[url])
+      this.store[url] = {id: res[0].faceId,
+                        smile: res[0].faceAttributes.smile }
+
+      this.verify(this.store[url].id, url)
     },
     err=>{
       this.toastr.error("Error Generating Id");
@@ -64,7 +75,7 @@ faceVerify(value){
     })
   }
 
-  verify(id){
+  verify(id, url){
         this.faceService.verifyFace(id).subscribe(
           (res: any)=>{
             console.log('ress',res)
@@ -80,7 +91,22 @@ faceVerify(value){
             let ave = total/res.length
             console.log('ave',ave)
             if(total>=0.5){
-              this.toastr.success("Valid Face")
+              if(!this.emotion){
+                this.toastr.success("Valid Face");
+                this.router.navigate(['/main'])
+              }
+              else{
+                console.log("smile status",this.store[url].smile )
+                if(this.store[url].smile == 1){
+                  this.toastr.success("Valid Face and Emotional state");
+                  this.router.navigate(['/main'])
+                }
+                else{
+                  this.toastr.error('User is not in right emotional state');
+                }
+                
+              }
+             
             }
             else{
               this.toastr.error('Invalid face');

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,15 @@ export class FaceRecogntionService {
 
   
   constructor(public http: HttpClient) { }
+
+
+  private isemotion$ = new BehaviorSubject(false);
+
+  emotionState = this.isemotion$.asObservable();
+
+  setEmotion(data) {
+  this.isemotion$.next(data);
+}
 
 detectionEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/detect?detectionModel=detection_01&returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,smile`
 
@@ -66,11 +75,12 @@ testData={
 
 
   start(){
-    return this.http.get(`http://192.168.8.102:5000/start`)
+    // return this.http.get(`http://192.168.8.102:5000/start`)
+    return this.http.get(`http://192.168.8.103:5000/start`)
   }
 
   stop(){
-    return this.http.get(`http://192.168.8.102:5000/stop`)
+    return this.http.get(`http://192.168.8.103:5000/stop`)
   }
 
 }

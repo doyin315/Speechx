@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { FaceRecogntionService } from 'src/app/services/face-recogntion.service';
 
 @Component({
   selector: 'app-base',
@@ -13,7 +14,8 @@ export class BaseComponent implements OnInit {
     { name: 'Face'},
     { name: 'Emotion'}
   ]
-  constructor(public router: Router) { }
+  constructor(public router: Router,
+              public faceService: FaceRecogntionService ) { }
 
   ngOnInit() {
   }
@@ -29,6 +31,7 @@ export class BaseComponent implements OnInit {
 
     }
     else{
+      this.faceService.setEmotion(true);
       this.router.navigate(['/face'])
 
     }
