@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './components/base/base.component';
 import { FacialComponent } from './components/facial/facial.component';
 import { MainComponent } from './components/main/main.component';
+import { VoiceComponent } from './components/voice/voice.component';
 
 
 const routes: Routes = [
-  {path:'index', component: FacialComponent},
+  {path:'index', component: BaseComponent},
   {path:'face', component: FacialComponent},
-  {path:'emotion', component: MainComponent},
+  {path:'voice', component: VoiceComponent},
+  {path:'main', component: MainComponent},
   {path:'**', redirectTo:'/index', pathMatch:'full'}
 ];
 

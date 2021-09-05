@@ -1,3 +1,11 @@
 <div class="container">
 
+    <div class="d-flex flex-row">
+        <span *ngFor="let op of options"  >
+            <span class="optioncover" (click)="navigation(op.name.toLocaleLowerCase())">
+                <span class="option ">{{op.name}}</span>
+            </span> 
+        </span>
+
+    </div>
 </div>

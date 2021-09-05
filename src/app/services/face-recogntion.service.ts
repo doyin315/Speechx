@@ -11,7 +11,7 @@ export class FaceRecogntionService {
   
   constructor(public http: HttpClient) { }
 
-detectionEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/detect?detectionModel=detection_03&returnFaceId=true&returnFaceLandmarks=false`
+detectionEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/detect?detectionModel=detection_01&returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,smile`
 
 
 options = {headers: new HttpHeaders({'Content-Type': 'application/json',
@@ -27,8 +27,10 @@ testId="b48e6385-187f-4fee-b4c6-6fc1a99a9973"
 
 
 
-faceIds=["3497d496-eca8-4272-868f-bf4417af7f51","8bcc3b0b-8871-4ac7-971f-adfa4c490d47","a48d79ce-b312-450d-819b-a0c6a3c63104"]
+// faceIds=["a6a75687-07e2-4347-90ca-3465e6155cf2","3c9107cf-e8c2-4c20-9fd7-e7bbe3415ed7","c3d7878a-964b-4553-9f09-94026f67826a"]
+// test ="https://speechxstore.blob.core.windows.net/test/test.jpg"
 
+faceIds=["903f62d8-13ea-48a1-b974-8efbb5401f69", "7060b5b7-32dd-4ed0-88ad-1f7bbd5b174e"]
 
 testEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/findsimilars`
 testData={
@@ -42,7 +44,7 @@ testData={
     let data={  
       url:  url
     }
-    return this.http.post(this.detectionEnd, this.test, this.options)
+    return this.http.post(this.detectionEnd, data, this.options)
   }
 
   sendFace(data){
@@ -62,6 +64,14 @@ testData={
     return this.http.post(this.testEnd,testData, this.options)
   }
 
+
+  start(){
+    return this.http.get(`http://192.168.8.102:5000/start`)
+  }
+
+  stop(){
+    return this.http.get(`http://192.168.8.102:5000/stop`)
+  }
 
 }
 
