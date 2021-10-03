@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FaceRecogntionService } from 'src/app/services/face-recogntion.service';
 import { Router } from "@angular/router";
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -28,7 +29,9 @@ export class VoiceComponent implements OnInit {
               public speechRecogService: SpeechRecogService,
               private toastr:ToastrService,
               public router: Router,
-              public faceService:FaceRecogntionService ) {
+              public faceService:FaceRecogntionService,
+              public authService: AuthService ) {
+
     this.showSearchButton = false
     this.speechData = '';
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -138,12 +141,15 @@ export class VoiceComponent implements OnInit {
       this.audioRecordingService.verifyAudio(data).subscribe(
         res => {
           console.log('Success', res);
-          if(res.result=="Accept"){
+          if(res.result=="Accept")
+          {
             console.log('toastr success')
             this.toastr.success("Authentication Successful!!!");
+            this.authService.setAuth(true);
             this.router.navigate(['/main']);
           }
-          else{
+          else
+          {
             this.toastr.error("Authentication Failed. Invalid User!");
           }
         

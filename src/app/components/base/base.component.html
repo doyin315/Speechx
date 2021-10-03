@@ -1,9 +1,9 @@
 <div class="container">
 
-    <div class="d-flex flex-row">
-        <span *ngFor="let op of options"  >
+    <div class="row">
+        <span *ngFor="let op of options"  class="col">
             <span class="optioncover" (click)="navigation(op.name.toLocaleLowerCase())">
-                <span class="option ">{{op.name}}</span>
+                <span class="btn-container">{{op.name}}</span>
             </span> 
         </span>
 

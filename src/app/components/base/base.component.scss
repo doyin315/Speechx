@@ -4,12 +4,28 @@
     
 }
 
+.row{
+    display: flex;
+    flex-direction: row;
+}
 .optioncover{
-    border: 1px solid blue;
+    background: #2ca;
     padding: 30px;
     margin: 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #fff;
+    font-size: 60px;
+    min-width: 140px;
 }
 
+
+
+
+.optioncover:hover{
+    transition: 1s;
+    transform: scale(1.15);
+}
+  
 

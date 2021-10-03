@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { stat } from 'fs';
+// import { stat } from 'fs';
 import { ToastrService } from 'ngx-toastr';
 import { FaceRecogntionService } from 'src/app/services/face-recogntion.service';
 import { Router } from "@angular/router";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-facial-recog',
@@ -21,7 +22,8 @@ export class FacialComponent implements OnInit {
     public fb: FormBuilder,
     private faceService: FaceRecogntionService,
     private toastr: ToastrService,
-    public router: Router
+    public router: Router,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -93,12 +95,14 @@ faceVerify(value){
             if(total>=0.5){
               if(!this.emotion){
                 this.toastr.success("Valid Face");
+                this.authService.setAuth(true);
                 this.router.navigate(['/main'])
               }
               else{
                 console.log("smile status",this.store[url].smile )
                 if(this.store[url].smile == 1){
                   this.toastr.success("Valid Face and Emotional state");
+                  this.authService.setAuth(true);
                   this.router.navigate(['/main'])
                 }
                 else{

@@ -39,7 +39,7 @@ testId="b48e6385-187f-4fee-b4c6-6fc1a99a9973"
 // faceIds=["a6a75687-07e2-4347-90ca-3465e6155cf2","3c9107cf-e8c2-4c20-9fd7-e7bbe3415ed7","c3d7878a-964b-4553-9f09-94026f67826a"]
 // test ="https://speechxstore.blob.core.windows.net/test/test.jpg"
 
-faceIds=["903f62d8-13ea-48a1-b974-8efbb5401f69", "7060b5b7-32dd-4ed0-88ad-1f7bbd5b174e"]
+faceIds=["fce943f3-b1d9-4128-9955-f1828ab7e0b1","ebfdbe1f-f10f-4d3d-a97c-cc6ad3abc1b5"]
 
 testEnd= `https://facetracker.cognitiveservices.azure.com/face/v1.0/findsimilars`
 testData={
@@ -76,11 +76,11 @@ testData={
 
   start(){
     // return this.http.get(`http://192.168.8.102:5000/start`)
-    return this.http.get(`http://192.168.8.103:5000/start`)
+    return this.http.get(`http://192.168.8.101:5000/start`)
   }
 
   stop(){
-    return this.http.get(`http://192.168.8.103:5000/stop`)
+    return this.http.get(`http://192.168.8.101:5000/stop`)
   }
 
 }

@@ -27,6 +27,7 @@ export class BaseComponent implements OnInit {
     }
 
     else if(key == 'face'){
+      this.faceService.setEmotion(false);
       this.router.navigate(['/face'])
 
     }

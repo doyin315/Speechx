@@ -50,9 +50,11 @@ export class MainComponent implements OnDestroy {
       console.log(val.includes('start'));
       if(val){
         if(val.includes('start')){
+          this.startPi();
           this.toastr.success('Engine has started!!!')
       }
-      else if(val.includes('stop')){
+      else if(val.includes('stop') || val.includes('store')){
+        this.stopPi();
         this.toastr.error('Engine has stopped!!!')
     } else{
       this.toastr.warning('We do not understand- Please Try again.')
@@ -61,6 +63,34 @@ export class MainComponent implements OnDestroy {
       }
     
   })
+  }
+
+  startPi(){
+    this.faceService.start().subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>{
+
+      },
+      ()=>{
+
+      }
+    )
+  }
+
+  stopPi(){
+    this.faceService.stop().subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>{
+
+      },
+      ()=>{
+
+      }
+    )
   }
 
   ngOnDestroy() {
