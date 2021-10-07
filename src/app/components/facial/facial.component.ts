@@ -18,6 +18,7 @@ export class FacialComponent implements OnInit {
   store={}
   emotion = false;
 
+  faceIds = []
   constructor(
     public fb: FormBuilder,
     private faceService: FaceRecogntionService,
@@ -32,6 +33,12 @@ export class FacialComponent implements OnInit {
     this.faceService.emotionState.subscribe(
       (state) =>{
         this.emotion = state;
+      })
+
+    this.faceService.faceState.subscribe(
+      (state) =>{
+        console.log("stateeee", state)
+        this.faceIds = state? [...state.faceData] : [];
       })
     
   }
@@ -78,7 +85,7 @@ faceVerify(value){
   }
 
   verify(id, url){
-        this.faceService.verifyFace(id).subscribe(
+        this.faceService.verifyFace(id, this.faceIds).subscribe(
           (res: any)=>{
             console.log('ress',res)
 

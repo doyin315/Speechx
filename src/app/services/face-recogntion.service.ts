@@ -11,7 +11,16 @@ export class FaceRecogntionService {
   
   constructor(public http: HttpClient) { }
 
+  private faceData$ = new BehaviorSubject(null);
+  faceState = this.faceData$.asObservable();
 
+
+  setfaceState(data) {
+    this.faceData$ .next(data);
+  }
+
+
+  public validFaceIds = [];
   private isemotion$ = new BehaviorSubject(false);
 
   emotionState = this.isemotion$.asObservable();
@@ -61,11 +70,11 @@ testData={
   }
 
 
-  verifyFace(id){
+  verifyFace(id, faceIds= ['']){
 
     const testData={
       faceId: id,
-      faceIds: [...this.faceIds],
+      faceIds: [...faceIds],
       maxNumOfCandidatesReturned: 10,
       mode: "matchPerson"
     }
