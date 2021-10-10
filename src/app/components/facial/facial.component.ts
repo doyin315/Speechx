@@ -71,6 +71,15 @@ faceVerify(value){
 
   this.faceService.getBlob(url).subscribe(
     res=>{
+      console.log(res)
+      if(res.length==0  || !res[0].faceId){
+        this.toastr.error("No face detected!!!");
+        return
+      }
+      if(res.length> 1){
+        this.toastr.warning("Multiple faces detected!!!")
+        return
+      }
       this.store[url] = {id: res[0].faceId,
                         smile: res[0].faceAttributes.smile }
 
@@ -162,31 +171,31 @@ faceVerify(value){
     return this.form.get('url') as FormControl;
   }
 
-  startPi(){
-    this.faceService.start().subscribe(
-      res=>{
-        console.log(res)
-      },
-      err=>{
+  // startPi(){
+  //   this.faceService.start().subscribe(
+  //     res=>{
+  //       console.log(res)
+  //     },
+  //     err=>{
 
-      },
-      ()=>{
+  //     },
+  //     ()=>{
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 
-  stopPi(){
-    this.faceService.stop().subscribe(
-      res=>{
-        console.log(res)
-      },
-      err=>{
+  // stopPi(){
+  //   this.faceService.stop().subscribe(
+  //     res=>{
+  //       console.log(res)
+  //     },
+  //     err=>{
 
-      },
-      ()=>{
+  //     },
+  //     ()=>{
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 }

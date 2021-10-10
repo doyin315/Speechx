@@ -85,11 +85,11 @@ testData={
 
   start(){
     // return this.http.get(`http://192.168.8.102:5000/start`)
-    return this.http.get(`http://192.168.8.101:5000/start`)
+    return this.http.get(`http://192.168.43.101:5000/start`)
   }
 
   stop(){
-    return this.http.get(`http://192.168.8.101:5000/stop`)
+    return this.http.get(`http://192.168.43.101:5000/stop`)
   }
 
 }
