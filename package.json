@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "ngx-toastr": "^10.0.4",
     "recordrtc": "^5.6.1",
     "rxjs": "~6.4.0",
